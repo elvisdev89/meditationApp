@@ -18,17 +18,23 @@ const SignUp = () => {
     const [password, setPassword] = useState("");
     const router = useRouter();
 
-    const handleRegister = async () => {
+    const validateForm = () => {
+        // crear lógica para validar el formulario
         if (!userName || !email || !password) {
-          Alert.alert("Error de Validación", "Por favor, completa todos los campos.");
-          return;
+            alert("Error de Validación", "Por favor, completa todos los campos.");
+            return false;
         }
-    
-        const userDetails = { userName, email, password, token: "sample-token" };
-        await AsyncStorage.setItem("userDetails", JSON.stringify(userDetails));
-        console.log("Usuario registrado:", userDetails);
-    
-        router.push("/login");
+        return true;
+    };
+
+    const handleRegister = async () => {
+        if (validateForm()) {
+            const userDetails = { userName, email, password, token: "sample-token" };
+            await AsyncStorage.setItem("userDetails", JSON.stringify(userDetails));
+            console.log("Usuario registrado:", userDetails);
+        
+            router.push("/login");
+        }
     };
     
     return (

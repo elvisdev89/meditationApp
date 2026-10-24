@@ -10,16 +10,18 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const router = useRouter();
 
-    const handleLogin = async () => {
-        if (!email || !password) {
-          Alert.alert("Error de Validación", "Por favor, complete todos los campos.");
-          return;
+    const validateForm = () => {
+        // crear lógica para validar el formulario
+        if (!email || !password) {            
+            alert("Error de Validación", "Por favor, complete todos los campos.");
+            return false;
         }
-    
-        const userDetails = { email, password, token: "sample-token" };
-    
-        console.log('userDetails', userDetails);
-    
+        return true;
+    };
+
+    const handleLogin = async () => {
+        const userDetails = { email, password, token: "sample-token" };    
+        console.log('userDetails', userDetails);    
         try {
           const detailsDatafromSignup = await AsyncStorage.getItem("userDetails");
           if (detailsDatafromSignup) {
@@ -38,6 +40,12 @@ const Login = () => {
           console.error("Error al acceder a AsyncStorage", error);
         }
     };
+
+    const handleLoginPress = () => {
+        if (validateForm()) {
+          handleLogin();
+        }
+    };      
   
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -110,7 +118,7 @@ const Login = () => {
                             borderRadius: 5,
                             alignItems: "center",
                         }}
-                        onPress={handleLogin}
+                        onPress={handleLoginPress}
                     >
                         <Text style={{ color: "#fff", fontWeight: "bold" }}>Login</Text>
                     </TouchableOpacity>
