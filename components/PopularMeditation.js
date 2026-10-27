@@ -90,7 +90,6 @@ const PopularMeditation = () => {
 };
 
 const styles = StyleSheet.create({
-
     container: (selectedMeditation, item) => ({
       width: 270,
       padding: SIZES.xLarge,
