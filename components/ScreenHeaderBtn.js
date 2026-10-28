@@ -23,7 +23,7 @@ const ScreenHeaderBtn = ({detailPage, handleShare}) => {
                     </>  
                 :
                     <>
-                        <TouchableOpacity style={styles.btnContainer} onPress={()=>router.push("/settings")}>
+                        <TouchableOpacity style={styles.btnContainer} onPress={()=>router.push("/settings/ThemeChange")}>
                             <Image source={icons.settings} style={styles.image} />
                         </TouchableOpacity>
                     </>
