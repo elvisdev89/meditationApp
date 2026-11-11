@@ -20,20 +20,17 @@ const Login = () => {
     };
 
     const handleLogin = async () => {
-        const userDetails = { email, password, token: "sample-token" };    
-        console.log('userDetails', userDetails);    
+        const userDetails = { email, password, token: "sample-token" };
         try {
           const detailsDatafromSignup = await AsyncStorage.getItem("userDetails");
           if (detailsDatafromSignup) {
             const parsedDetails = JSON.parse(detailsDatafromSignup);
             if (userDetails.email === parsedDetails.email && userDetails.password === parsedDetails.password) {
               router.push("/home");
-            } else {
-              Alert.alert("Error", "Correo electrónico o contraseña incorrectos.");
+            } else {              
               alert("Error Correo electrónico o contraseña incorrectos.");
             }
           } else {
-            Alert.alert("Error", "No se encontraron detalles del usuario en AsyncStorage.");
             alert("Error No se encontraron detalles del usuario en AsyncStorage.");
           }
         } catch (error) {

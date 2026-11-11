@@ -17,14 +17,14 @@ const Home = () => {
     }, []);
 
     const loadUserDetails = async () => {
-        const user = await AsyncStorage.getItem("userDetails");
-        console.log("user", user);
+        const user = await AsyncStorage.getItem("userDetails");        
         setUserDetails(user);
     };
+
     const { theme, toggleTheme } = useTheme();
-    console.log('theme',theme);
 
     const isDarkMode = theme === "dark";
+    
     return (
         <>
             <SafeAreaView

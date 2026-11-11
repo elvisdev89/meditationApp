@@ -1,13 +1,10 @@
-import { Image, TouchableOpacity, StyleSheet } from "react-native";
-import { View } from "react-native-web"; // Podrías querer usar "react-native" en su lugar si no es basado en la web.
+import { View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { COLORS, SIZES } from "../constants/theme";
 import icons from "../constants/icons";
 import { useRouter } from "expo-router";
 
 const ScreenHeaderBtn = ({detailPage, handleShare}) => {
-    console.log(detailPage);
-
-    const router=useRouter();
+    const router = useRouter();
     return (
         <>
             <View style={styles.btn}>
@@ -23,7 +20,7 @@ const ScreenHeaderBtn = ({detailPage, handleShare}) => {
                     </>  
                 :
                     <>
-                        <TouchableOpacity style={styles.btnContainer} onPress={()=>router.push("/settings/ThemeChange")}>
+                        <TouchableOpacity style={styles.btnContainer} onPress={()=>router.push("/settings")}>
                             <Image source={icons.settings} style={styles.image} />
                         </TouchableOpacity>
                     </>

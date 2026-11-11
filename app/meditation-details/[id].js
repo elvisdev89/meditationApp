@@ -9,6 +9,7 @@ import {
   RefreshControl,
   Share,
   Alert,
+  Platform,
   StyleSheet,
 } from "react-native";
 
@@ -67,17 +68,50 @@ const MeditationDetails = () => {
         return null;
     };
 
+    // Alert.alert no hace nada en web, así que allí se usa window.alert.
+    const showMessage = (title, message) => {
+        if (Platform.OS === "web") {
+            window.alert(`${title}\n${message}`);
+        } else {
+            Alert.alert(title, message);
+        }
+    };
+
     const onShare = async () => {
-        try {
-            console.log("onShare");
-            const result = await Share.share({
-                message: `Mira esta meditación: ${meditationItem.title} (${meditationItem.duration})`,
-            });
-            if (result.action === Share.dismissedAction) {
-                // Compartir cancelado
+        if (!meditationItem) return;
+
+        const message = `Mira esta meditación: ${meditationItem.title} (${meditationItem.duration})`;
+
+        if (Platform.OS === "web") {
+            const url = window.location.href;
+
+            // Navegadores con menú de compartir (móviles, Safari, Chrome en Windows/macOS/Android).
+            if (navigator.share) {
+                try {
+                    await navigator.share({ title: meditationItem.title, text: message, url });
+                } catch (error) {
+                    // AbortError = el usuario cerró el menú de compartir; no es un fallo.
+                    if (error.name !== "AbortError") {
+                        showMessage("Error", "No se pudo compartir la meditación.");
+                    }
+                }
+                return;
             }
+
+            // Alternativa: copiar al portapapeles (Firefox, Chrome en Linux, etc.).
+            try {
+                await navigator.clipboard.writeText(`${message}\n${url}`);
+                showMessage("Enlace copiado", "El enlace de la meditación se copió al portapapeles.");
+            } catch (error) {
+                showMessage("Error", "Tu navegador no permite compartir ni copiar al portapapeles.");
+            }
+            return;
+        }
+
+        try {
+            await Share.share({ message });
         } catch (error) {
-            Alert.alert(error.message);
+            showMessage("Error", error.message);
         }
     };
 

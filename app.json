@@ -11,7 +11,7 @@
         "resizeMode": "contain",
         "backgroundColor": "#ffffff"
       },
-      "platforms": ["ios", "android"],
+      "platforms": ["ios", "android", "web"],
       "ios": {
         "supportsTablet": true,
         "bundleIdentifier": "com.elvisdev89.meditarionapp",
@@ -28,7 +28,8 @@
         "versionCode": 1
       },
       "web": {
-        "favicon": "./assets/favicon.png"
+        "favicon": "./assets/favicon.png",
+        "bundler": "metro"
       }
     }
   }

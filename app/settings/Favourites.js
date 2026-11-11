@@ -12,8 +12,13 @@ import { COLORS, FONT, SIZES } from "../../constants";
 import DailyMeditation from "../../components/DailyMeditation";
 import { useFocusEffect } from "expo-router";
 import ScreenHeaderBtn from '../../components/ScreenHeaderBtn'
+import { useTheme } from "../../context/ThemeProvider";
 
 const Favourites = () => {
+    const { theme } = useTheme();
+    const isDarkMode = theme === "dark";
+    const textColor = isDarkMode ? COLORS.darkText : COLORS.primary;
+
     const [favorites, setFavorites] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const loadFavorites = async () => {
@@ -35,21 +40,26 @@ const Favourites = () => {
     );
 
     return(
-        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.darkBackground }}>
+        <SafeAreaView
+            style={{
+                flex: 1,
+                backgroundColor: isDarkMode ? COLORS.darkBackground : COLORS.lightWhite,
+            }}
+        >
             <ScreenHeaderBtn/>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.container}>
                     {isLoading ? (
                         <ActivityIndicator size="large" color={COLORS.primary} />
                     ) : favorites.length === 0 ? (
-                        <Text style={styles.headerTitle}>No se encontraron elementos favoritos.</Text>
+                        <Text style={[styles.headerTitle, { color: textColor }]}>
+                            No se encontraron elementos favoritos.
+                        </Text>
                     ) : (
                         <>
-                            <Text style={{ 
-                                textAlign: "center", 
-                                color: "#FF4500", 
-                                fontWeight: "bold" 
-                            }}>Mis Ejercicios Favoritos</Text>
+                            <Text style={[styles.title, { color: textColor }]}>
+                                Mis Ejercicios Favoritos
+                            </Text>
                             <DailyMeditation meditations={favorites} />
                         </>
                     )}
@@ -69,8 +79,11 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: SIZES.large,
     fontFamily: FONT.medium,
-    color: COLORS.primary,
     textAlign: "center",
     marginTop: 20,
+  },
+  title: {
+    fontSize: SIZES.xLarge,
+    fontFamily: FONT.bold,
   },
 });

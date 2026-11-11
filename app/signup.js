@@ -31,8 +31,7 @@ const SignUp = () => {
         if (validateForm()) {
             const userDetails = { userName, email, password, token: "sample-token" };
             await AsyncStorage.setItem("userDetails", JSON.stringify(userDetails));
-            console.log("Usuario registrado:", userDetails);
-        
+            console.log("Usuario registrado:", userDetails);        
             router.push("/login");
         }
     };
