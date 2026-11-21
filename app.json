@@ -14,7 +14,7 @@
       "platforms": ["ios", "android", "web"],
       "ios": {
         "supportsTablet": true,
-        "bundleIdentifier": "com.elvisdev89.meditarionapp",
+        "bundleIdentifier": "com.elvisdev89.meditationapp",
         "buildNumber": "1",
         "version": "1.0.0"
       },
@@ -24,7 +24,7 @@
           "backgroundColor": "#ffffff"
         },
         "jsEngine": "hermes",
-        "package": "com.elvisdev89.meditarionapp",
+        "package": "com.elvisdev89.meditationapp",
         "versionCode": 1
       },
       "web": {
